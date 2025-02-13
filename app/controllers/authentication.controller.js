@@ -7,7 +7,17 @@ const users = [{
 }]
 
 async function login(req, res){
-
+    const user = req.body.user;
+    const password = req.body.password;
+    if(!user || !password){
+        return res.status(400).send({status: "ERROR", message: "the information on the fields are incorrect"});
+    }
+    const userCheck = users.find(user => user.user === user);
+    if (!userCheck){
+        return res.status(400).send({status: "ERROR", message: "Error"})
+    }
+    const correctLogin = await bcryptjs.compare(password, userCheck.password);
+    
 }
 
 async function register(req, res){
