@@ -1,3 +1,5 @@
+import bcryptjs from "bcryptjs";
+
 const users = [{
     user: "Ricky",
     email: "rickycortes668668@gmail.com",
@@ -13,13 +15,20 @@ async function register(req, res){
     const email = req.body.email;
     const password = req.body.password;
     if(!user || !email || !password){
-        res.status(400).send({status: "ERROR", message: "the information on the fields are incorrect"});
+        return res.status(400).send({status: "ERROR", message: "the information on the fields are incorrect"});
     }
     const userCheck = users.find(user => user.user === user);
     if (userCheck){
-        res.status(400).send({status: "ERROR", message: "there is already an account with this user name"})
+        return res.status(400).send({status: "ERROR", message: "there is already an account with this user name"})
     }
-    
+    const salt = await bcryptjs.genSalt(6);
+    const hashPassword = await bcryptjs.hash(password, salt);
+    const newUser = {
+        user, email, password: hashPassword
+    }
+    users.push(newUser);
+    return res.status(201).send({status: "OK", message: `User ${newUser.user} added`, redirect: "/"});
+
 }
 
 export const methods = {
