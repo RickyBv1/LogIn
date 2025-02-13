@@ -8,6 +8,20 @@
     <title>LogIn</title>
 </head>
 <body>
-    <h1>Test text</h1>
+    <main>
+        <div class="form-container">
+            <h1>Log in</h1>
+            <p>Type in your credentials to enter the administration area</p>
+            <form id="login-form">
+                <label class="sr-only" for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Username">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Password">
+                <button type="submit">Log In</button>
+                <p class="error hidden">Error to Log In</p>
+            </form>
+            <p>Don't have an account? - <a href="/register">Create one</a></p>
+        </div>
+    </main>
 </body>
 </html>
